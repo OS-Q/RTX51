@@ -1,0 +1,459 @@
+/************************************************************
+* 文件名称: timer.c
+* 作者: 周晨阳
+* 版本: 1.0
+* 日期: 2017/4/29
+* 描述: // 
+* 主要函数及其功能 : 定时器的使用，有Timer1，和Timer2可供独立使用
+* 历史修改记录: // 历史修改记录
+* <作者> <时间> <版本 > <描述>
+* 周晨阳 2017/4/29 添加了此文件说明注释
+***********************************************************/
+//////////////////////定时器典型应用/////////////////////////////////////// 
+/*
+        
+				
+				setTimeout(Timer1,5000); //设置定时器定时长度 ,5秒
+				while(1)
+				{
+					if(isExpiredTimer(Timer1))   //如果达到定时时间
+					{
+						 stopTimer(Timer1);//达到定时时间后一定要关闭定时器，否则会无法重复使用定时器
+						//定时时间到，你的代码写在这
+					}
+					else//如果未达到定时时间或定时器未启动
+					{ 
+						
+					
+							restartTimer(Timer1);
+							
+						
+					}
+				}
+*/ 
+///////////////////////////////////////////////////////////////		 
+#include	"timer.h"
+ enum 
+{
+	 ACTIVE,EXPIRED,STOPPED
+} 
+	Timer1_state=STOPPED,
+	Timer2_state=STOPPED;
+ static u16 Timer1_temp=0;
+ static u16 Timer2_temp=0;
+
+struct TimerInfo
+{
+	 u16 Timeout;
+	u16 Hz;
+}timer1_struct={0,0},
+timer2_struct={0,0};
+//static struct  
+//{  u16 Timeout;
+//	u16 Hz;
+
+//} timer1_struct={0,0};
+//static struct  
+//{
+//  u16 Timeout;
+//	u16 Hz;
+//} timer2_struct={0,0};
+//static struct  
+//{
+//  u16 Timeout;
+//	u16 Hz;
+//} timer3_struct={0,0};
+//static struct  
+//{ u16 Timeout;
+//	u16 Hz;
+
+//} timer4_struct={0,0};
+ 
+
+
+//设置定时器的发生频率
+void setTimerHertz(u8 whichTimer,u16 Hz)
+{   				 
+	   switch(whichTimer)
+		 {
+			
+			 case Timer1:
+			 {
+				timer1_struct.Hz=Hz;  
+			 };
+			 break;
+			 case Timer2:
+			 {
+				timer2_struct.Hz=Hz;  
+			 };
+			 break;
+//			 case Timer3:
+//			 {
+//				timer3_struct.Hz=Hz;  
+//			 };
+//			 break;
+//			 case Timer4:
+//			 {
+//				timer4_struct.Hz=Hz;  
+//			 };
+//			 break;
+			 
+		 }
+
+	
+}
+u16 getTimerHertz(u8 whichTimer)
+{
+	 switch(whichTimer)
+	 {
+		
+		 break;
+		 case Timer1:
+		 {
+			  return timer1_struct.Hz;
+		 };
+		 break;
+		 case Timer2:
+		 {
+			  return timer2_struct.Hz;
+		 };
+		 break;
+//		 case Timer3:
+//		 {
+//			  return timer3_struct.Hz;
+//		 };
+//		 break;
+//		 case Timer4:
+//		 {
+//			  return timer4_struct.Hz;
+//		 };
+//		 break;
+		default: return 0;
+	 }
+}
+//设置定时器的定时时间
+void setTimeout(u8 whichTimer,u16 time)
+{
+if(!(Timer1_state==ACTIVE||Timer2_state==ACTIVE)) 
+{	
+	TIM_InitTypeDef		TIM_InitStructure;	
+  TIM_InitStructure.TIM_Mode      = TIM_16BitAutoReload;	//指定工作模式,   TIM_16BitAutoReload,TIM_16Bit,TIM_8BitAutoReload,TIM_16BitAutoReloadNoMask
+	TIM_InitStructure.TIM_Polity    = PolityLow;			//指定中断优先级, PolityHigh,PolityLow
+	TIM_InitStructure.TIM_Interrupt = ENABLE;				//中断是否允许,   ENABLE或DISABLE
+	TIM_InitStructure.TIM_ClkSource = TIM_CLOCK_1T;			//指定时钟源,     TIM_CLOCK_1T,TIM_CLOCK_12T,TIM_CLOCK_Ext
+	TIM_InitStructure.TIM_ClkOut    = DISABLE;				//是否输出高速脉冲, ENABLE或DISABLE
+	TIM_InitStructure.TIM_Run       = DISABLE;				//是否初始化后启动定时器, ENABLE或DISABLE
+	TIM_InitStructure.TIM_Value     = 65536UL - (MAIN_Fosc / 1000);		//初值,1ms
+	switch(whichTimer)
+	{
+
+		case Timer1:
+		{
+			timer1_struct.Timeout=time;		
+		  
+			Timer_Inilize(Timer1,&TIM_InitStructure);				//初始化Timer0	  Timer0,Timer1,Timer
+		};
+		case Timer2:
+		{
+			timer2_struct.Timeout=time;		
+		  
+			Timer_Inilize(Timer3,&TIM_InitStructure);				//初始化Timer0	  Timer0,Timer1,Timer
+		};
+		
+		default:
+			break;
+		
+	}
+}
+}
+u16 getTimerout(u8 whichTimer)
+{
+	 switch(whichTimer)
+	 {
+		
+		 case Timer1:
+		 {
+			  return timer1_struct.Timeout;
+		 };
+		 break;
+		 case Timer2:
+		 {
+			  return timer2_struct.Timeout;
+		 };
+		 break;
+		
+		default: return 0;
+	 }
+	
+}
+//停用定时器
+void stopTimer(u8 whichTimer)
+{   switch(whichTimer)
+	{ 
+		case Timer1:
+		{
+			Timer1_Stop();
+		 Timer1_state= STOPPED;
+
+		};
+		break;
+		case Timer2:
+		{
+			Timer3_Stop();		
+		 Timer2_state= STOPPED;
+
+		};
+		break;
+	}
+	 
+}
+//若定时器已启动但未达到定时时间返回1
+bit isActiveTimer(u8 whichTimer)
+{
+	 switch(whichTimer)
+	 {
+	   case Timer1 :
+	   {
+		 return  Timer1_state == ACTIVE;
+
+	   };
+		 case Timer2 :
+	   {
+		 return  Timer2_state == ACTIVE;
+
+	   };
+	   break;
+	 }
+}
+//当定时达到设定时间时返回1
+bit isExpiredTimer(u8 whichTimer)
+{
+	   switch(whichTimer)
+	{
+		case Timer1:
+		{
+				return  Timer1_state == EXPIRED;
+		};
+		case Timer2:
+		{
+				return  Timer2_state == EXPIRED;
+		};
+		break;
+	}
+			
+	 
+}
+//当定时器被停止时返回1
+bit isStopped(u8 whichtimer)
+{
+	 switch(whichtimer)
+	{
+		case Timer1:
+		{
+				return  Timer1_state == STOPPED;
+		};
+		case Timer2:
+		{
+				return  Timer2_state == STOPPED;
+		};
+		break;
+	}
+}
+
+//初始化并打开定时器，需要先设置好定时时间或频率
+void restartTimer(u8 whichTimer)
+{
+	  if(!isStopped(whichTimer))
+		{
+			 switch(whichTimer)
+			{
+				case Timer1:
+				{
+					Timer1_Run();
+					Timer1_state= ACTIVE;
+				};
+				break;
+				case Timer2:
+				{
+					Timer3_Run();
+					Timer2_state= ACTIVE;
+				};
+				break;
+				default:
+					break;
+			}
+			 
+			
+	 
+		}
+}
+//当定时器定时结束后返回1，并自动调用restart（），重新定时
+bit onRestartTimer(u8 whichTimer)
+{
+	  if (isExpiredTimer(whichTimer))
+		{
+			restartTimer(whichTimer);
+			return TRUE;
+		}
+		else
+		{
+			return FALSE;
+		} 
+	
+}
+
+
+/********************* Timer1中断函数************************/
+void Timer1_ISR (void) interrupt TIMER1_VECTOR
+{
+
+   if(Timer1_temp==timer1_struct.Timeout)
+		 {
+			  Timer1_Stop();
+			  Timer1_temp=0;
+			  Timer1_state= EXPIRED;
+		 }
+		 else
+		 {
+			  Timer1_temp++;
+		 }
+		 
+
+}
+
+/********************* Timer2中断函数************************/
+//此定时器用作串口的定时器了
+//void Timer2_ISR (void) interrupt TIMER2_VECTOR
+//{
+//	
+//}
+
+/********************* Timer3中断函数************************/
+void timer3_int (void) interrupt TIMER3_VECTOR
+{
+    if(Timer2_temp==timer2_struct.Timeout)
+		 {
+			  Timer3_Stop();
+			  Timer2_temp=0;
+			  Timer2_state= EXPIRED;
+		 }
+		 else
+		 {
+			  Timer2_temp++;
+		 }
+}
+
+/********************* Timer4中断函数************************/
+void timer4_int (void) interrupt TIMER4_VECTOR
+{
+
+}
+
+//========================================================================
+// 函数: u8	Timer_Inilize(u8 TIM, TIM_InitTypeDef *TIMx)
+// 描述: 定时器初始化程序.
+// 参数: TIMx: 结构参数,请参考timer.h里的定义.
+// 返回: 成功返回0, 空操作返回1,错误返回2.
+// 版本: V1.0, 2012-10-22
+//========================================================================
+static u8 Timer_Inilize(u8 TIM, TIM_InitTypeDef *TIMx)
+{
+	if(TIM > Timer4)	return 1;	//空操作
+
+	if(TIM == Timer0)
+	{
+		if(TIMx->TIM_Mode >  TIM_16BitAutoReloadNoMask)	return 2;	//错误
+		TR0 = 0;		//停止计数
+		ET0 = 0;	//禁止中断
+		PT0 = 0;	//低优先级中断
+		TMOD &= 0xf0;	//定时模式, 16位自动重装
+		AUXR &= ~0x80;	//12T模式, 
+		INT_CLKO &= ~0x01;	//不输出时钟
+		if(TIMx->TIM_Interrupt == ENABLE)		ET0 = 1;	//允许中断
+		if(TIMx->TIM_Polity == PolityHigh)		PT0 = 1;	//高优先级中断
+		TMOD |= TIMx->TIM_Mode;	//工作模式,0: 16位自动重装, 1: 16位定时/计数, 2: 8位自动重装, 3: 16位自动重装, 不可屏蔽中断
+		if(TIMx->TIM_ClkSource == TIM_CLOCK_1T)		AUXR |=  0x80;	//1T
+		if(TIMx->TIM_ClkSource == TIM_CLOCK_Ext)	TMOD |=  0x04;	//对外计数或分频
+		if(TIMx->TIM_ClkOut == ENABLE)	INT_CLKO |=  0x01;	//输出时钟
+		
+		TH0 = (u8)(TIMx->TIM_Value >> 8);
+		TL0 = (u8)TIMx->TIM_Value;
+		if(TIMx->TIM_Run == ENABLE)	TR0 = 1;	//开始运行
+		return	0;		//成功
+	}
+
+	if(TIM == Timer1)
+	{
+		if(TIMx->TIM_Mode >= TIM_16BitAutoReloadNoMask)	return 2;	//错误
+		TR1 = 0;	//停止计数
+		ET1 = 0;	//禁止中断
+		PT1 = 0;	//低优先级中断
+		TMOD &=  0x0f;	//定时模式, 16位自动重装
+		AUXR &= ~0x40;	//12T模式, 
+		INT_CLKO &= ~0x02;	//不输出时钟
+		if(TIMx->TIM_Interrupt == ENABLE)		ET1 = 1;	//允许中断
+		if(TIMx->TIM_Polity == PolityHigh)		PT1 = 1;	//高优先级中断
+		TMOD |= (TIMx->TIM_Mode << 4);	//工作模式,0: 16位自动重装, 1: 16位定时/计数, 2: 8位自动重装
+		if(TIMx->TIM_ClkSource == TIM_CLOCK_1T)		AUXR |=  0x40;	//1T
+		if(TIMx->TIM_ClkSource == TIM_CLOCK_Ext)	TMOD |=  0x40;	//对外计数或分频
+		if(TIMx->TIM_ClkOut == ENABLE)	INT_CLKO |=  0x02;	//输出时钟
+		
+		TH1 = (u8)(TIMx->TIM_Value >> 8);
+		TL1 = (u8)TIMx->TIM_Value;
+		if(TIMx->TIM_Run == ENABLE)	TR1 = 1;	//开始运行
+		return	0;		//成功
+	}
+
+	if(TIM == Timer2)		//Timer2,固定为16位自动重装, 中断无优先级
+	{
+		if(TIMx->TIM_ClkSource >  TIM_CLOCK_Ext)	return 2;
+		AUXR &= ~0x1c;		//停止计数, 定时模式, 12T模式
+		IE2  &= ~(1<<2);	//禁止中断
+		INT_CLKO &= ~0x04;	//不输出时钟
+		if(TIMx->TIM_Interrupt == ENABLE)			IE2  |=  (1<<2);	//允许中断
+		if(TIMx->TIM_ClkSource == TIM_CLOCK_1T)		AUXR |=  (1<<2);	//1T
+		if(TIMx->TIM_ClkSource == TIM_CLOCK_Ext)	AUXR |=  (1<<3);	//对外计数或分频
+		if(TIMx->TIM_ClkOut == ENABLE)	INT_CLKO |=  0x04;	//输出时钟
+
+		TH2 = (u8)(TIMx->TIM_Value >> 8);
+		TL2 = (u8)TIMx->TIM_Value;
+		if(TIMx->TIM_Run == ENABLE)	AUXR |=  (1<<4);	//开始运行
+		return	0;		//成功
+	}
+
+	if(TIM == Timer3)		//Timer3,固定为16位自动重装, 中断无优先级
+	{
+		if(TIMx->TIM_ClkSource >  TIM_CLOCK_Ext)	return 2;
+		T4T3M &= 0xf0;		//停止计数, 定时模式, 12T模式, 不输出时钟
+		IE2  &= ~(1<<5);	//禁止中断
+		if(TIMx->TIM_Interrupt == ENABLE)			IE2  |=  (1<<5);	//允许中断
+		if(TIMx->TIM_ClkSource == TIM_CLOCK_1T)		T4T3M |=  (1<<1);	//1T
+		if(TIMx->TIM_ClkSource == TIM_CLOCK_Ext)	T4T3M |=  (3<<1);	//对外计数或分频
+		if(TIMx->TIM_ClkOut == ENABLE)	T4T3M |=  1;	//输出时钟
+
+		TH3 = (u8)(TIMx->TIM_Value >> 8);
+		TL3 = (u8)TIMx->TIM_Value;
+		if(TIMx->TIM_Run == ENABLE)	T4T3M |=  (1<<3);	//开始运行
+		return	0;		//成功
+	}
+
+	if(TIM == Timer4)		//Timer4,固定为16位自动重装, 中断无优先级
+	{
+		if(TIMx->TIM_ClkSource >  TIM_CLOCK_Ext)	return 2;
+		T4T3M &= 0x0f;		//停止计数, 定时模式, 12T模式, 不输出时钟
+		IE2  &= ~(1<<6);	//禁止中断
+		if(TIMx->TIM_Interrupt == ENABLE)			IE2  |=  (1<<6);	//允许中断
+		if(TIMx->TIM_ClkSource == TIM_CLOCK_1T)		T4T3M |=  (1<<5);	//1T
+		if(TIMx->TIM_ClkSource == TIM_CLOCK_Ext)	T4T3M |=  (3<<5);	//对外计数或分频
+		if(TIMx->TIM_ClkOut == ENABLE)	T4T3M |=  (1<<4);	//输出时钟
+
+		TH4 = (u8)(TIMx->TIM_Value >> 8);
+		TL4 = (u8)TIMx->TIM_Value;
+		if(TIMx->TIM_Run == ENABLE)	T4T3M |=  (1<<7);	//开始运行
+		return	0;		//成功
+	}
+
+	return 2;	//错误
+}
+
+

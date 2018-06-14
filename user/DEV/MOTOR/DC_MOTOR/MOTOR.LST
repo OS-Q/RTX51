@@ -1,0 +1,13 @@
+CX51 COMPILER V8.05a   MOTOR                                                               07/02/2017 11:12:53 PAGE 1   
+
+
+CX51 COMPILER V8.05a, COMPILATION OF MODULE MOTOR
+OBJECT MODULE PLACED IN K:\µ¥Æ¬»úÏà¹Ø\µç×Ó´óÈü³ÌÐò¿ò¼Ü\HARDWARE\DEVICES\MOTOR\DC_MOTOR\MOTOR.OBJ
+COMPILER INVOKED BY: C:\Keil\C51\BIN\cx51.exe K:\µ¥Æ¬»úÏà¹Ø\µç×Ó´óÈü³ÌÐò¿ò¼Ü\HARDWARE\DEVICES\MOTOR\DC_MOTOR\MOTOR.C?
+
+line level    source
+
+*** ERROR C318 OF K:\µ¥Æ¬»úÏà¹Ø\µç×Ó´óÈü³ÌÐò¿ò¼Ü\HARDWARE\DEVICES\MOTOR\DC_MOTOR\MOTOR.C?: can't open file 'K:\µ¥Æ¬»úÏà¹
+             -Ø\µç×Ó´óÈü³ÌÐò¿ò¼Ü\HARDWARE\DEVICES\MOTOR\DC_MOTOR\MOTOR.C?'
+
+CX51 COMPILATION COMPLETE.  0 WARNING(S),  1 ERROR(S)
