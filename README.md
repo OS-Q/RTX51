@@ -1,22 +1,16 @@
-﻿[![sites](qitas/Qi.png)](http://www.qitas.cn)
+﻿# [RTX51](https://github.com/qitas/RTX51) 
 
-# RTX for 8051
+#### qitas@qitas.cn
 
-### 项目描述
+## [描述](https://github.com/qitas/RTX51/wiki) 
 
-运行在8051内核上的RTOS，但是需要付费使用或者破解
-
----
-
-## 组成
+运行在8051内核上的RTOS
 
 
 
 ---
-## 说明
 
-2018-10-15: 规范该仓库
+### 锻造最美之器
 
----
-## 为锻造最美之器
 [![sites](qitas/qitas.png)](http://www.qitas.cn)
+
