@@ -1,10 +1,5 @@
-﻿# [RTX51](https://github.com/OS-Q/RTX51) 
-
-[![sites](http://182.61.61.133/link/resources/OSQ.png)](http://www.OS-Q.com)
-
-#### 归属实时系统：[RTQ](https://github.com/OS-Q/RTQ)
-
-### [RTX51简介](https://github.com/OS-Q/RTX51/wiki)
+﻿# [RTX51](https://github.com/OS-Q/RTX51)
+### [简介](https://github.com/OS-Q/RTX51/wiki)
 
 [RTX51](https://github.com/OS-Q/RTX51)有两个版本TINY和FULL，后者可替换选择很多，在此不收录。
 
@@ -26,11 +21,4 @@ RTX51 Tiny的程序用标准的C语言构造，由Keil C51 C编译器编译。�
 * 中断等待：20个周期或更少
 * 上下文切换时间：100～700个周期
 
-8051单片机资源：https://github.com/sochub/8051
-
-### [收录资源](https://github.com/OS-Q) 
-
-* [文档](docs/)
-* [资源](src/)
-
-### [OS-Q = Open Solutions | Open Source |  Operating System ](http://www.OS-Q.com)
+### [Q = (OpenSource & OperatingSystem) ](http://www.OS-Q.com)
