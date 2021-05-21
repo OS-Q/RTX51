@@ -5,3 +5,8 @@
 *desktop*
 .pio/
 .vscode/
+*.obj
+*._*
+*.htm*
+*.uvgu*
+*.uvop*
