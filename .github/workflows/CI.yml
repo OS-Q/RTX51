@@ -1,0 +1,88 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - 'boards/**'
+      - 'builder/**'
+      - 'examples/**'
+      - '**.json'
+      - '**.py'
+
+jobs:
+  CodeCheck:
+    name: Lint
+    runs-on: ubuntu-latest
+    steps:
+    - name: Check out
+      uses: actions/checkout@v2
+      with:
+        submodules: "recursive"
+
+    - name: cppcheck
+      uses: Qful/check-action@master
+      with:
+        github_token: ${{ secrets.OSQ_REPO_TOKEN }}
+        enable: all
+        inconclusive: disable
+        inline_suppression: disable
+        force_language: c
+        force: enable
+        max_ctu_depth: 2
+        std: c11
+        output_file: ./codecheck.txt
+        other_options: --bug-hunting --verbose --std=c11
+
+    - name: report
+      uses: Qful/check-action@master
+      env:
+        GITHUB_TOKEN: ${{ secrets.OSQ_REPO_TOKEN }}
+        BRANCH_NAME: 'master'
+
+    - name: Upload
+      uses: actions/upload-artifact@v2
+      with:
+        name: code_check_report
+        path: codecheck.txt
+
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        example:
+          - "native-blink"
+          - "stc-blink"
+          - "stc-header"
+        package: ["pio","qio"]
+        os: [ubuntu-latest, windows-latest, macos-latest]
+
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          submodules: "recursive"
+          fetch-depth: 1
+
+      - name: Set up Python
+        uses: actions/setup-python@v1
+        with:
+          python-version: 3.9
+
+      - name: Install qio
+        if: matrix.package == 'qio'
+        run: |
+          pip install -U https://github.com/OS-Q/M03/releases/latest/download/qio.zip
+          qio platform install file://.
+
+      - name: Install pio
+        if: matrix.package == 'pio'
+        run: |
+          pip install -U https://github.com/platformio/platformio/archive/develop.zip
+          pio platform install file://.
+
+      - name: Build examples
+        working-directory: examples
+        run: |
+          pio run -d ${{ matrix.example }}

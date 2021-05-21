@@ -21,4 +21,4 @@ RTX51 Tiny的程序用标准的C语言构造，由Keil C51 C编译器编译。�
 * 中断等待：20个周期或更少
 * 上下文切换时间：100～700个周期
 
-### [Q = (OpenSource & OperatingSystem) ](http://www.OS-Q.com)
+#### [源圈OS-Q: 起点决定收益](http://www.OS-Q.com)
