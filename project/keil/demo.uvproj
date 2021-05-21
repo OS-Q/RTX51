@@ -374,62 +374,6 @@
       </TargetOption>
       <Groups>
         <Group>
-          <GroupName>software</GroupName>
-          <GroupOption>
-            <CommonProperty>
-              <UseCPPCompiler>0</UseCPPCompiler>
-              <RVCTCodeConst>0</RVCTCodeConst>
-              <RVCTZI>0</RVCTZI>
-              <RVCTOtherData>0</RVCTOtherData>
-              <ModuleSelection>0</ModuleSelection>
-              <IncludeInBuild>2</IncludeInBuild>
-              <AlwaysBuild>2</AlwaysBuild>
-              <GenerateAssemblyFile>2</GenerateAssemblyFile>
-              <AssembleAssemblyFile>2</AssembleAssemblyFile>
-              <PublicsOnly>2</PublicsOnly>
-              <StopOnExitCode>11</StopOnExitCode>
-              <CustomArgument></CustomArgument>
-              <IncludeLibraryModules></IncludeLibraryModules>
-              <ComprImg>1</ComprImg>
-              <BankNo>65535</BankNo>
-            </CommonProperty>
-            <Group51>
-              <C51>
-                <RegisterColoring>2</RegisterColoring>
-                <VariablesInOrder>2</VariablesInOrder>
-                <IntegerPromotion>2</IntegerPromotion>
-                <uAregs>2</uAregs>
-                <UseInterruptVector>2</UseInterruptVector>
-                <Fuzzy>8</Fuzzy>
-                <Optimize>2</Optimize>
-                <WarningLevel>3</WarningLevel>
-                <SizeSpeed>2</SizeSpeed>
-                <ObjectExtend>2</ObjectExtend>
-                <ACallAJmp>2</ACallAJmp>
-                <InterruptVectorAddress>0</InterruptVectorAddress>
-                <VariousControls>
-                  <MiscControls></MiscControls>
-                  <Define></Define>
-                  <Undefine></Undefine>
-                  <IncludePath></IncludePath>
-                </VariousControls>
-              </C51>
-              <Ax51>
-                <UseMpl>2</UseMpl>
-                <UseStandard>2</UseStandard>
-                <UseCase>2</UseCase>
-                <UseMod51>2</UseMod51>
-                <VariousControls>
-                  <MiscControls></MiscControls>
-                  <Define></Define>
-                  <Undefine></Undefine>
-                  <IncludePath></IncludePath>
-                </VariousControls>
-              </Ax51>
-            </Group51>
-          </GroupOption>
-        </Group>
-        <Group>
           <GroupName>ABS_TASK</GroupName>
           <Files>
             <File>
@@ -500,108 +444,52 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>hardware</GroupName>
-          <GroupOption>
-            <CommonProperty>
-              <UseCPPCompiler>0</UseCPPCompiler>
-              <RVCTCodeConst>0</RVCTCodeConst>
-              <RVCTZI>0</RVCTZI>
-              <RVCTOtherData>0</RVCTOtherData>
-              <ModuleSelection>0</ModuleSelection>
-              <IncludeInBuild>2</IncludeInBuild>
-              <AlwaysBuild>2</AlwaysBuild>
-              <GenerateAssemblyFile>2</GenerateAssemblyFile>
-              <AssembleAssemblyFile>2</AssembleAssemblyFile>
-              <PublicsOnly>2</PublicsOnly>
-              <StopOnExitCode>11</StopOnExitCode>
-              <CustomArgument></CustomArgument>
-              <IncludeLibraryModules></IncludeLibraryModules>
-              <ComprImg>1</ComprImg>
-              <BankNo>65535</BankNo>
-            </CommonProperty>
-            <Group51>
-              <C51>
-                <RegisterColoring>2</RegisterColoring>
-                <VariablesInOrder>2</VariablesInOrder>
-                <IntegerPromotion>2</IntegerPromotion>
-                <uAregs>2</uAregs>
-                <UseInterruptVector>2</UseInterruptVector>
-                <Fuzzy>8</Fuzzy>
-                <Optimize>3</Optimize>
-                <WarningLevel>3</WarningLevel>
-                <SizeSpeed>2</SizeSpeed>
-                <ObjectExtend>2</ObjectExtend>
-                <ACallAJmp>2</ACallAJmp>
-                <InterruptVectorAddress>0</InterruptVectorAddress>
-                <VariousControls>
-                  <MiscControls></MiscControls>
-                  <Define></Define>
-                  <Undefine></Undefine>
-                  <IncludePath></IncludePath>
-                </VariousControls>
-              </C51>
-              <Ax51>
-                <UseMpl>2</UseMpl>
-                <UseStandard>2</UseStandard>
-                <UseCase>2</UseCase>
-                <UseMod51>2</UseMod51>
-                <VariousControls>
-                  <MiscControls></MiscControls>
-                  <Define></Define>
-                  <Undefine></Undefine>
-                  <IncludePath></IncludePath>
-                </VariousControls>
-              </Ax51>
-            </Group51>
-          </GroupOption>
-        </Group>
-        <Group>
           <GroupName>DEVICES</GroupName>
           <Files>
             <File>
               <FileName>BUTTON.C</FileName>
               <FileType>1</FileType>
-              <FilePath>..\HARDWARE\DEVICES\BUTTON\BUTTON.C</FilePath>
+              <FilePath>..\src\DEVICES\BUTTON\BUTTON.C</FilePath>
             </File>
             <File>
               <FileName>LED.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\HARDWARE\DEVICES\LED\LED.c</FilePath>
+              <FilePath>..\src\DEVICES\LED\LED.c</FilePath>
             </File>
             <File>
               <FileName>MOTOR.C</FileName>
               <FileType>1</FileType>
-              <FilePath>..\HARDWARE\DEVICES\MOTOR\DC_MOTOR\MOTOR.C</FilePath>
+              <FilePath>..\src\DEVICES\MOTOR\DC_MOTOR\MOTOR.C</FilePath>
             </File>
             <File>
               <FileName>SERVO.C</FileName>
               <FileType>1</FileType>
-              <FilePath>..\HARDWARE\DEVICES\MOTOR\SERVO\SERVO.C</FilePath>
+              <FilePath>..\src\DEVICES\MOTOR\SERVO\SERVO.C</FilePath>
             </File>
             <File>
               <FileName>STEP_MOTOR.C</FileName>
               <FileType>1</FileType>
-              <FilePath>..\HARDWARE\DEVICES\MOTOR\STEP_MOTOR\STEP_MOTOR.C</FilePath>
+              <FilePath>..\src\DEVICES\MOTOR\STEP_MOTOR\STEP_MOTOR.C</FilePath>
             </File>
             <File>
               <FileName>RELAY.C</FileName>
               <FileType>1</FileType>
-              <FilePath>..\HARDWARE\DEVICES\COMMON_DEVICES\RELAY\RELAY.C</FilePath>
+              <FilePath>..\src\DEVICES\COMMON_DEVICES\RELAY\RELAY.C</FilePath>
             </File>
             <File>
               <FileName>ANGLE.C</FileName>
               <FileType>1</FileType>
-              <FilePath>..\HARDWARE\DEVICES\SENSOR\ANGLE\ANGLE.C</FilePath>
+              <FilePath>..\src\DEVICES\SENSOR\ANGLE\ANGLE.C</FilePath>
             </File>
             <File>
               <FileName>LCD1602.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\HARDWARE\DEVICES\DISPLAY\1602\LCD1602.c</FilePath>
+              <FilePath>..\src\DEVICES\DISPLAY\1602\LCD1602.c</FilePath>
             </File>
             <File>
               <FileName>74HC595.C</FileName>
               <FileType>1</FileType>
-              <FilePath>..\HARDWARE\DEVICES\COMMON_DEVICES\74H\74HC595.C</FilePath>
+              <FilePath>..\src\DEVICES\COMMON_DEVICES\74H\74HC595.C</FilePath>
             </File>
           </Files>
         </Group>
@@ -611,7 +499,7 @@
             <File>
               <FileName>fixedPulser.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\HARDWARE\COMMON_HARDWARE\fixedPulser.c</FilePath>
+              <FilePath>..\src\COMMON_HARDWARE\fixedPulser.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -621,42 +509,42 @@
             <File>
               <FileName>ADC.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\HARDWARE\BSP\ADC.c</FilePath>
+              <FilePath>..\src\BSP\ADC.c</FilePath>
             </File>
             <File>
               <FileName>delay.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\HARDWARE\BSP\delay.c</FilePath>
+              <FilePath>..\src\BSP\delay.c</FilePath>
             </File>
             <File>
               <FileName>GPIO.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\HARDWARE\BSP\GPIO.c</FilePath>
+              <FilePath>..\src\BSP\GPIO.c</FilePath>
             </File>
             <File>
               <FileName>PCA.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\HARDWARE\BSP\PCA.c</FilePath>
+              <FilePath>..\src\BSP\PCA.c</FilePath>
             </File>
             <File>
               <FileName>stc15_pwm.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\HARDWARE\BSP\stc15_pwm.c</FilePath>
+              <FilePath>..\src\BSP\stc15_pwm.c</FilePath>
             </File>
             <File>
               <FileName>timer.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\HARDWARE\BSP\timer.c</FilePath>
+              <FilePath>..\src\BSP\timer.c</FilePath>
             </File>
             <File>
               <FileName>USART1.C</FileName>
               <FileType>1</FileType>
-              <FilePath>..\HARDWARE\BSP\USART1.C</FilePath>
+              <FilePath>..\src\BSP\USART1.C</FilePath>
             </File>
             <File>
               <FileName>stc15_eeprom.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\HARDWARE\BSP\stc15_eeprom.c</FilePath>
+              <FilePath>..\src\BSP\stc15_eeprom.c</FilePath>
             </File>
           </Files>
         </Group>
